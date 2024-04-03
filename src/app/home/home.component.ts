@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { Housinglocation } from '../housinglocation';
+import { HousingService } from '../housing.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -10,15 +11,10 @@ import { Housinglocation } from '../housinglocation';
 })
 export class HomeComponent {
   readonly baseUrl = 'https://angular.io/assets/images/tutorials/faa';
+  housingLocationList: Housinglocation[]=[];
 
-  housingLocation: Housinglocation = {
-    id: 9999,
-    name: 'Test Home',
-    city: 'Test city',
-    state: 'ST',
-    photo: `${this.baseUrl}/example-house.jpg`,
-    availableUnits: 99,
-    wifi: true,
-    laundry: false,
+  constructor(private housingService: HousingService) {
+    this.housingLocationList = this.housingService.getAllHousingLocations();
   }
+  
 }
